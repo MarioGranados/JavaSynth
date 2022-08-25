@@ -1,48 +1,35 @@
-import java.lang.reflect.Array;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class PianoRoll {
-    protected final int keys = 7;
 
-    private String sharp;
-    private String natural;
-    private String middleC;
+    public static void main(String args[]) {
+        JFrame piano = new JFrame("PianoRoll");
+        Panel panel = new Panel();
+        ArrayList<Button> keys = new ArrayList<>();
 
-    public void generateKeys() {
-        ArrayList<String> keys = new ArrayList();
-        int octave = 0;
-        for (int i = 0; i < this.keys; i++) {
-            switch (octave) {
-                case 0:
-                    keys.add("do");
-                    break;
-                case 1:
-                    keys.add("re");
-                    break;
-                case 2:
-                    keys.add("mi");
-                    break;
-                case 3:
-                    keys.add("fa");
-                    break;
-                case 4:
-                    keys.add("so");
-                    break;
-                case 5:
-                    keys.add("la");
-                    break;
-                case 6:
-                    keys.add("si");
-                    break;
-            }
-            if (octave == 7) {
-                octave = 0;
-            } else {
-                octave++;
-            }
+        String[] notes = {"C", "C#", "D", "D#", "E", "F","G", "G#" , "A", "A#", "B"};
 
+        int ocatve = 4;
+
+        for(int i = 0; i < notes.length; i++) {
+            keys.add(new Button(notes[i] + " " + ocatve));
+            ActionListener actionListener = new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println(e.getActionCommand());
+                }
+            };
+            keys.get(i).addActionListener(actionListener);
+            panel.add(keys.get(i));
         }
-        System.out.println(keys);
+        piano.add(panel);
+        piano.setSize(500,200);
+        piano.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        piano.setVisible(true);
     }
 
 }

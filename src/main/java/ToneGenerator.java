@@ -36,6 +36,17 @@ public class ToneGenerator {
         this.line.stop();
     }
 
+    public double sineWave(double fCyclePosition) {
+       return Math.sin(2 * Math.PI * fCyclePosition);
+    }
+    public double triangleWave(double fCyclePosition) {
+        return 2 / Math.PI * Math.asin(Math.sin(2 * Math.PI * fCyclePosition));
+    }
+
+    public double sawToothWave(double fCyclePosition) {
+        return -2 / Math.PI * Math.atan(1 / Math.tan(2 * Math.PI * fCyclePosition));
+    }
+
 
     //This is just an example - you would want to handle LineUnavailable properly...
     public void generateTone() throws InterruptedException, LineUnavailableException {
@@ -67,7 +78,7 @@ public class ToneGenerator {
             // Figure out how many samples we can add
             int ctSamplesThisPass = line.available() / SAMPLE_SIZE;
             for (int i = 0; i < ctSamplesThisPass; i++) {
-                cBuf.putShort((short) (Short.MAX_VALUE * Math.sin(2 * Math.PI * fCyclePosition)));
+                cBuf.putShort((short) (Short.MAX_VALUE * sineWave(fCyclePosition)));
 
                 fCyclePosition += fCycleInc;
                 if (fCyclePosition > 1)
